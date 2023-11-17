@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funciones con Date en JavaScript</title>
+    <style>
+   .cuadro {
+            border: 3px solid #4CAF50; 
+            padding: 10px;
+            margin: 1px;
+            width: 400px; 
+            border-radius: 8px; 
+            overflow: hidden; 
+        }
+
+        #resultadoFecha, #resultadoHora {
+            white-space: nowrap; /* Evita que el contenido de las cajas se divida en varias líneas */
+            width: 90%; /* Ajusta el ancho al 100% para ocupar el espacio disponible */
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="cuadro" id="diasRestantes">
+    <strong>Días restantes hasta el final de curso:</strong>
+    <span></span>
+</div>
+
+<div class="cuadro" id="aniversarioFinSemana">
+    <strong>Años en los que tu aniversario cae en fin de semana:</strong>
+    <span></span>
+</div>
+
+<div class="cuadro">
+    <label for="formatoFecha">Selecciona el formato de fecha:</label>
+    <select id="formatoFecha">
+        <option value="1">17/02/2016</option>
+        <option value="2">Mércores, 17 de febreiro de 2016</option>
+        <option value="3">Wednesday, February 17, 2016</option>
+    </select>
+    <button onclick="mostrarFecha()">Mostrar Fecha</button>
+    <div class="cuadro" id="resultadoFecha">
+        <strong>Fecha actual en el formato seleccionado:<br></strong>
+        <span></span>
+    </div>
+</div>
+
+<div class="cuadro">
+    <label for="formatoHora">Selecciona el formato de hora:</label>
+    <select id="formatoHora">
+        <option value="1">14:35:07</option>
+        <option value="2">02:35 PM ou 02:35 AM</option>
+    </select>
+    <button onclick="mostrarHora()">Mostrar Hora</button>
+    <div class="cuadro" id="resultadoHora">
+        <strong>Hora actual en el formato seleccionado:<br></strong>
+        <span></span>
+    </div>
+</div>
+
+<script>
+    const fechaActual = new Date();
+
+    // Amosar o número de días que quedan dende hoxe ata final de curso
+    const finDeCurso = new Date(fechaActual.getFullYear(), 5, 25);
+    const diasRestantes = Math.ceil((finDeCurso - fechaActual) / (1000 * 60 * 60 * 24));
+    document.getElementById("diasRestantes").querySelector("span").innerText = Math.abs(diasRestantes);
+
+    // Pide a data do teu aniversario e saque anos en fin de semana
+    const aniversario = new Date(prompt("Introduce la fecha de tu aniversario (MM/DD):"));
+    let añosEnFinDeSemana = "";
+    let añoActual = fechaActual.getFullYear();
+    while (añoActual <= 2100) {
+        aniversario.setFullYear(añoActual);
+        if (aniversario.getDay() === 0 || aniversario.getDay() === 6) {
+            añosEnFinDeSemana += `Año ${añoActual}, `;
+        }
+        añoActual++;
+    }
+    document.getElementById("aniversarioFinSemana").querySelector("span").innerText = añosEnFinDeSemana;
+
+    // Amosa a data actual en diferentes formatos
+function mostrarFecha() {
+    const formatoSeleccionado = document.getElementById("formatoFecha").value;
+    let opciones = {};
+
+    switch (formatoSeleccionado) {
+        case '1':
+            opciones = { year: 'numeric', month: 'numeric', day: 'numeric' };
+            break;
+        case '2':
+            opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            break;
+        case '3':
+            opciones = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+            break;
+    }
+
+    const idioma = (formatoSeleccionado === '2') ? 'gl-ES' : 'en-US';
+    let resultado = fechaActual.toLocaleDateString(idioma, opciones);
+
+    // Para el caso '3' (formato específico), ajustamos el día y el mes a gallego
+    if (formatoSeleccionado === '3' && idioma === 'gl-ES') {
+        const fechaArray = resultado.split(' ');
+        const dia = fechaArray[2].replace(',', '').trim();
+        const mes = fechaArray[1].trim();
+        resultado = `${fechaArray[0]}, ${dia} de ${mes} de ${fechaArray[3]}`;
+    }
+
+    document.getElementById("resultadoFecha").querySelector("span").innerText = resultado;
+}
+
+
+function mostrarHora() {
+    const formatoSeleccionado = document.getElementById("formatoHora").value;
+    let opciones = {};
+
+    switch (formatoSeleccionado) {
+        case '1':
+            opciones = { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false };
+            break;
+        case '2':
+            opciones = { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true };
+            break;
+    }
+
+    const resultado = fechaActual.toLocaleTimeString('en-US', opciones);
+    document.getElementById("resultadoHora").querySelector("span").innerText = resultado;
+}
+
+
+
+</script>
+
+</body>
+</html>
+
+
