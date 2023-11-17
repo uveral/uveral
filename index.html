@@ -15,8 +15,8 @@
         }
 
         #resultadoFecha, #resultadoHora {
-            white-space: nowrap; /* Evita que el contenido de las cajas se divida en varias líneas */
-            width: 90%; /* Ajusta el ancho al 100% para ocupar el espacio disponible */
+            white-space: nowrap; 
+            width: 90%; 
         }
 
     </style>
@@ -63,12 +63,10 @@
 <script>
     const fechaActual = new Date();
 
-    // Amosar o número de días que quedan dende hoxe ata final de curso
     const finDeCurso = new Date(fechaActual.getFullYear(), 5, 25);
     const diasRestantes = Math.ceil((finDeCurso - fechaActual) / (1000 * 60 * 60 * 24));
     document.getElementById("diasRestantes").querySelector("span").innerText = Math.abs(diasRestantes);
 
-    // Pide a data do teu aniversario e saque anos en fin de semana
     const aniversario = new Date(prompt("Introduce la fecha de tu aniversario (MM/DD):"));
     let añosEnFinDeSemana = "";
     let añoActual = fechaActual.getFullYear();
@@ -81,7 +79,6 @@
     }
     document.getElementById("aniversarioFinSemana").querySelector("span").innerText = añosEnFinDeSemana;
 
-    // Amosa a data actual en diferentes formatos
 function mostrarFecha() {
     const formatoSeleccionado = document.getElementById("formatoFecha").value;
     let opciones = {};
@@ -101,7 +98,6 @@ function mostrarFecha() {
     const idioma = (formatoSeleccionado === '2') ? 'gl-ES' : 'en-US';
     let resultado = fechaActual.toLocaleDateString(idioma, opciones);
 
-    // Para el caso '3' (formato específico), ajustamos el día y el mes a gallego
     if (formatoSeleccionado === '3' && idioma === 'gl-ES') {
         const fechaArray = resultado.split(' ');
         const dia = fechaArray[2].replace(',', '').trim();
