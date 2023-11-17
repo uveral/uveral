@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Usuario</title>
+</head>
+<body>
+
+<script>
+  function obtenerNomeApelidos() {
+   var nomeCompleto = prompt("Introduce tu nome e apelidos:");
+    var tamanoNomeCompleto = nomeCompleto.length;
+    var tamanoSenEspazos = nomeCompleto.replace(/\s/g, "").length;
+    var enMinusculas = nomeCompleto.toLowerCase();
+    var enMaiusculas = nomeCompleto.toUpperCase();
+    var partes = nomeCompleto.split(" ");
+    var nome = partes[0];
+    var apelido1 = partes[1];
+    var apelido2 = partes[2];
+    var propostaUsuario = nome.toLowerCase() + apelido1.charAt(0).toUpperCase() + apelido2.charAt(0).toUpperCase();
+    alert("Tamaño do nome e apelidos: " + tamanoNomeCompleto +
+          "\nTamaño sen espazos: " + tamanoSenEspazos +
+          "\nEn minúsculas: " + enMinusculas +
+          "\nEn maiúsculas: " + enMaiusculas +
+          "\nNome: " + nome +
+          "\nApelido1: " + apelido1 +
+          "\nApelido2: " + apelido2 +
+          "\nProposta de usuario: " + propostaUsuario);
+  }
+
+
+  function verificarContrasena() {
+    var contrasena = prompt("Introduce a túa contrasinal:");
+    var cumpleCondicions = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[_\-@$%&!])[A-Za-z\d_\-@$%&!]{8,16}$/.test(contrasena);
+
+    if (cumpleCondicions) {
+      alert("A contrasinal cumpre coas condicións.");
+    } else {
+      alert("A contrasinal non cumpre coas condicións.");
+    }
+  }
+
+  obtenerNomeApelidos();
+  verificarContrasena();
+</script>
+
+</body>
+</html>
