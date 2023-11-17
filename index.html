@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manejo de Ventanas</title>
+    <script>
+        let ventanaEmergente;
+
+        function abrirVentana() {
+            if (confirm("¿Deseas abrir una nueva ventana?")) {
+                ventanaEmergente = window.open("nuevaVentana.html", "NuevaVentana", "width=300, height=300, top=400, left=400, toolbar=no, menubar=no");
+                // Contenido de la nueva ventana
+                ventanaEmergente.document.write(`
+                    <h3>Exemplo de Ventá nova</h3>
+                    <p>URL: ${window.location.href}</p>
+                    <p>Protocolo: ${window.location.protocol}</p>
+                    <p>Navegador: ${navigator.userAgent}</p>
+                    <p>Java esta disponible: ${navigator.javaEnabled() ? 'Sí' : 'Non'}</p>
+                `);
+            }
+        }
+
+        function cerrarVentana() {
+            if (ventanaEmergente && !ventanaEmergente.closed) {
+                ventanaEmergente.close();
+            } else {
+                alert("A ventana remota xa foi pechada.");
+            }
+        }
+
+        function desplazarVentana() {
+            if (ventanaEmergente && !ventanaEmergente.closed) {
+                ventanaEmergente.moveBy(50, 50);
+                 ventanaEmergente.focus();
+            }
+        }
+
+        function redimensionarVentana() {
+            if (ventanaEmergente && !ventanaEmergente.closed) {
+                ventanaEmergente.resizeTo(500, 500);
+                ventanaEmergente.focus();
+            }
+        }
+         function aumentarVentana() {
+            if (ventanaEmergente && !ventanaEmergente.closed) {
+                ventanaEmergente.resizeBy(50, 50);
+                ventanaEmergente.focus();
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Ventana Principal</h1>
+    <button onclick="abrirVentana()">Abrir Ventana</button>
+    <button onclick="cerrarVentana()">Cerrar Ventana</button>
+    <button onclick="desplazarVentana()">Desplazar Ventana</button>
+    <button onclick="aumentarVentana()">Aumentar Ventana</button>
+    <button onclick="redimensionarVentana()">Redimensionar Ventana</button>
+</body>
+</html>
+
