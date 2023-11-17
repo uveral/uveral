@@ -38,7 +38,6 @@ function mostrarFecha(): void {
     const idioma: string = (formatoSeleccionado === '2') ? 'gl-ES' : 'en-US';
     let resultado: string = fechaActual.toLocaleDateString(idioma, opciones);
 
-    // Para el caso '3' (formato específico), ajustamos el día y el mes a gallego
     if (formatoSeleccionado === '3' && idioma === 'gl-ES') {
         const fechaArray: string[] = resultado.split(' ');
         const dia: string = fechaArray[2].replace(',', '').trim();
